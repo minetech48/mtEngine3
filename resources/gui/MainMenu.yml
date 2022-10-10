@@ -1,0 +1,7 @@
+elements:
+  ResetButton:
+    size: [200, 30]
+    position: [3, -3]
+    
+    text: reset
+    onClick: GUIReset
