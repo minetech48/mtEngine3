@@ -1,0 +1,11 @@
+*
+!*/
+!/src/**
+!/resources/**
+
+!CMakeLists.txt
+!.gitignore
+
+resources/soundboards
+resources/config/*
+resources/logs/*
