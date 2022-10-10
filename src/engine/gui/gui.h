@@ -19,6 +19,8 @@
 #include "../engineCore.h"
 
 class GUI : public EngineSystem {
+	static SDL_Renderer *globalRenderer;
+	
 	public:
 		static std::string WINDOW_NAME;
 		static std::vector<std::function<void(SDL_Event)>> SDLEventHandlers;
@@ -31,8 +33,12 @@ class GUI : public EngineSystem {
 		void initialize();
 		void handleEvent(EngineEvent event);
 		void update();
+		
+		static bool initSDL();
 
-		void static addSDLEventHandler(std::function<void(SDL_Event)> function);
+		static void addSDLEventHandler(std::function<void(SDL_Event)> function);
+		
+		static inline SDL_Renderer* getRenderer() {return globalRenderer;}
 };
 
 void loadGUI(std::string filePath);

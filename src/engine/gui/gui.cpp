@@ -9,6 +9,7 @@ int windowWidth = 1000, windowHeight = 850;
 std::string GUI::WINDOW_NAME = "mtEngineWindow";
 
 SDL_Window* GUI::window = NULL;
+SDL_Renderer* GUI::globalRenderer;
 
 SDL_Surface* windowSurface = NULL;
 SDL_Surface* testImage = NULL;
@@ -286,7 +287,7 @@ void GUI::addSDLEventHandler(std::function<void(SDL_Event)> function) {
 	SDLEventHandlers.push_back(function);
 }
 
-bool initSDL() {
+bool GUI::initSDL() {
 	//Initializing SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		logf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -314,12 +315,12 @@ bool initSDL() {
 	}
 	//windowSurface = SDL_GetWindowSurface(window);
 	
-    SDL_Renderer* gRenderer = SDL_CreateRenderer( GUI::window, -1, SDL_RENDERER_ACCELERATED );
-	if (gRenderer == NULL) {
+	globalRenderer = SDL_CreateRenderer( GUI::window, -1, SDL_RENDERER_ACCELERATED );
+	if (globalRenderer == NULL) {
 		logf("Failed to create renderer: %s\n", SDL_GetError());
 		return false;
 	}
-	Renderer::setRenderer(gRenderer);
+	Renderer::setRenderer(globalRenderer);
 	
 	//temp
 	// TTF_Font* font = TTF_OpenFont("resources/FreeMono.ttf", 22);
