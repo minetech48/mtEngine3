@@ -44,6 +44,8 @@ ConfigFile* ConfigHandler::loadConfig(std::string configFile) {
 			
 			value = line.substr(delimiterIndex+1);
 			
+			if (value.length() == 0) continue;
+			
 			if (isNumber(value)) {
 				config->setValue(
 					line.substr(0, delimiterIndex),
@@ -78,7 +80,8 @@ void ConfigHandler::saveConfig(ConfigFile *config) {
 	
 	itterate(intMap, file << entry.first + ":" + std::to_string(entry.second) + '\n';)
 	itterate(boolMap, file << entry.first + ":" + (entry.second ? "true" : "false") + '\n';)
-	itterate(stringMap, file << entry.first + ":" + entry.second + '\n';)
+	itterate(stringMap, if ((entry.second).length() == 0) continue;
+		file << entry.first + ":" + entry.second + '\n';)
 	
 	file.close();
 }
