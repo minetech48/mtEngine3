@@ -14,10 +14,10 @@ void UIParser::parseUIElement(UIElement* elementPtr, YAML::Node root) {
 	}
 	
 	if (root["bind"]) {//config bound switch
-		if (root["config"] && globalConfig->boolMap.contains(root["bind"].as<std::string>()))
+		if (root["config"])
 			elementPtr->bindPtr = &ConfigHandler::getConfig(root["config"].as<std::string>())->
 				boolMap[root["bind"].as<std::string>()];
-		else if (globalConfig != NULL && globalConfig->boolMap.contains(root["bind"].as<std::string>()))
+		else if (globalConfig != NULL)
 			elementPtr->bindPtr = &globalConfig->
 				boolMap[root["bind"].as<std::string>()];
 		else
