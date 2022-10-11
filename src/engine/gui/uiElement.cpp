@@ -7,16 +7,16 @@
 #include "../engineCore.h"
 
 void UIElement::alignElement(UIElement* parentPtr, UIElement* elementPtr) {
-	//make containers fill parent if dimensions undefined
+	//size defaults
 	bool fill = false;
-	if (elementPtr->defSize.x == 0 && elementPtr->defSize.y == 0
-			&& elementPtr->isContainer()) {
-		fill = true;
+	if (elementPtr->defSize.x == 0 && elementPtr->defSize.y == 0) {
 		
 		if (parentPtr->isGridContainer())
 			elementPtr->defSize = {1, 1};
-		else if (elementPtr->isContainer())
+		else if (elementPtr->isContainer()) {
+			fill = true;
 			elementPtr->defSize = parentPtr->position2-parentPtr->position;
+		}
 	}
 	
 	vec2i parentSize;
