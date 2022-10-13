@@ -354,13 +354,20 @@ void Renderer::applyBorder(vec2i* start, vec2i* end) {
 }
 
 //rendering actions
+bool started;
 void Renderer::start() {
+	if (started) return;
+	
 	setColor("Background");//background color
 	SDL_RenderClear(sdl_renderer);
+	
+	started = true;
 }
 
 void Renderer::finish() {
 	SDL_RenderPresent(sdl_renderer);
+	
+	started = false;
 }
 
 void Renderer::close() {
