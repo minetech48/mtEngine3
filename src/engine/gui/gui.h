@@ -21,6 +21,8 @@
 class GUI : public EngineSystem {
 	static SDL_Renderer *globalRenderer;
 	
+	static int windowWidth, windowHeight;
+
 	public:
 		static std::string WINDOW_NAME;
 		static std::vector<std::function<void(SDL_Event)>> SDLEventHandlers;
@@ -39,6 +41,11 @@ class GUI : public EngineSystem {
 		static void addSDLEventHandler(std::function<void(SDL_Event)> function);
 		
 		static inline SDL_Renderer* getRenderer() {return globalRenderer;}
+		
+		static inline int getWindowWidth() {return windowWidth;}
+		static inline int getWindowHeight() {return windowHeight;}
+		
+		static void setWindowSize(int width, int height);
 };
 
 void loadGUI(std::string filePath);

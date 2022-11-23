@@ -4,7 +4,7 @@
 #include <queue>
 #include <stack>
 
-int windowWidth = 1000, windowHeight = 850;
+int GUI::windowWidth = 1000, GUI::windowHeight = 850;
 
 std::string GUI::WINDOW_NAME = "mtEngineWindow";
 
@@ -35,7 +35,7 @@ void GUI::initialize() {
 	//loadMedia();
 	//tempDrawFunction();
 	
-	rootElement.position2 = {windowWidth, windowHeight};
+	rootElement.position2 = {GUI::windowWidth, GUI::windowHeight};
 	rootElement.name = "root";
 	
 	//std::thread(windowLoop).detach();
@@ -266,13 +266,7 @@ void windowLoop() {
             // SDL_Log("Window %d resized to %dx%d",
             //         event.window.windowID, event.window.data1,
             //         event.window.data2);
-			windowWidth = event.window.data1;
-			windowHeight = event.window.data2;
-			rootElement.position2 = {windowWidth, windowHeight};
-			
-			for (auto it = GUI::menus.rbegin(); it != GUI::menus.rend(); it++) {
-				UIElement::alignElement(&rootElement, &((*it).second));
-			}
+			GUI::setWindowSize(event.window.data1, event.window.data2);
 			
 			break;
 		}
@@ -280,6 +274,16 @@ void windowLoop() {
 		for (auto funct : GUI::SDLEventHandlers) {
 			funct(event);
 		}
+	}
+}
+
+void GUI::setWindowSize(int width, int height) {
+	GUI::windowWidth = width;
+	GUI::windowHeight = height;
+	rootElement.position2 = {GUI::windowWidth, GUI::windowHeight};
+	
+	for (auto it = GUI::menus.rbegin(); it != GUI::menus.rend(); it++) {
+		UIElement::alignElement(&rootElement, &((*it).second));
 	}
 }
 
@@ -308,7 +312,7 @@ bool GUI::initSDL() {
 
 	//Creating window
 	GUI::window = SDL_CreateWindow(GUI::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-				windowWidth, windowHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+				GUI::windowWidth, GUI::windowHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	if (GUI::window == NULL) {
 		logf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		return false;
